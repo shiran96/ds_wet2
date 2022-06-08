@@ -1,7 +1,7 @@
 
-#include "ds_manager.h"
+#include "ds.h"
 
-StatusType DsManager::DsMergeGroups(int GroupID1, int GroupID2)
+StatusType DS::DSacquireCompany(int GroupID1, int GroupID2)
 {
     if(GroupID1<=0 || GroupID2<=0 || GroupID1>numOfGroups || GroupID2>numOfGroups)
     {
@@ -18,7 +18,7 @@ StatusType DsManager::DsMergeGroups(int GroupID1, int GroupID2)
     return SUCCESS;
 }
 
-StatusType DsManager::DsAddPlayer(int PlayerID, int GroupID, int score)
+StatusType DS::DSaddEmployee(int PlayerID, int GroupID, int score)
 {
     if (GroupID > numOfGroups || GroupID <= 0 || PlayerID <= 0 || score>scale || score<=0)
     {
@@ -45,7 +45,7 @@ StatusType DsManager::DsAddPlayer(int PlayerID, int GroupID, int score)
 
 }
 
-StatusType DsManager::DsRemovePlayer(int PlayerID)
+StatusType DS::DSremoveEmployee(int PlayerID)
 {
     if (PlayerID <= 0)
     {
@@ -83,7 +83,7 @@ StatusType DsManager::DsRemovePlayer(int PlayerID)
 }
 
 
-StatusType DsManager::DsIncreasePlayerIDLevel(int PlayerID, int LevelIncrease)
+StatusType DS::DSemployeeSalaryIncrease(int PlayerID, int LevelIncrease)
 {
     if(PlayerID<=0 || LevelIncrease <=0)
     {
@@ -159,7 +159,7 @@ StatusType DsManager::DsIncreasePlayerIDLevel(int PlayerID, int LevelIncrease)
     }
     return SUCCESS;
 }
-StatusType DsManager::DsChangePlayerIDScore(int PlayerID, int NewScore)
+StatusType DS::DSpromoteEmployee(int PlayerID, int NewScore)
 {
     if(PlayerID<=0 || NewScore<= 0 || NewScore>this->scale)
     {
@@ -214,7 +214,7 @@ StatusType DsManager::DsChangePlayerIDScore(int PlayerID, int NewScore)
     return SUCCESS;
 }
 
-StatusType DsManager::DsGetPercentOfPlayersWithScoreInBounds(int GroupID, int score,
+StatusType DS::DSavregeGradeInBounds(int GroupID, int score,
                                                   int lowerLevel, int higherLevel,double * players)
 {
     if(GroupID<0 || GroupID>numOfGroups || players== nullptr)
@@ -291,7 +291,7 @@ StatusType DsManager::DsGetPercentOfPlayersWithScoreInBounds(int GroupID, int sc
     }
 }
 
-StatusType DsManager::DsAverageHighestPlayerLevelByGroup(int GroupID, int m, double * level)
+StatusType DS::DSsumOfGradeTopEmployee(int GroupID, int m, double * level)
 {
     if( level== nullptr || GroupID>numOfGroups || GroupID<0 || m<=0  )
     {

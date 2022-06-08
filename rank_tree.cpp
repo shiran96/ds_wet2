@@ -1506,9 +1506,3 @@ AvlRankTree::Node* AvlRankTree::getRoot() const
     return this->root;
 }
 
-
-
-
-
-
-
