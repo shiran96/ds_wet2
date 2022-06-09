@@ -8,7 +8,7 @@
 #include "library2.h"
 #include "unionFind.h"
 #include <memory>
-using std::shared_ptr;
+using std::Employee;
 
 class DS
 {

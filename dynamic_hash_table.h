@@ -5,7 +5,7 @@
 #include "linked_list.h"
 #include "employee.h"
 #include <memory>
-using std::shared_ptr;
+using std::Employee;
                             
 const int INITIAL_SIZE=10;
 class DynamicHashTable //HashTable of type chains
@@ -16,7 +16,7 @@ class DynamicHashTable //HashTable of type chains
     void makeDifferentSizeTable(int old_table_size, int new_table_size);
 
     public:
-    LinkedList<shared_ptr<Player>>** arr; //every cell in the array is a linked list
+    LinkedList<Employee<Player>>** arr; //every cell in the array is a linked list
                                         //of type shared_ptr of type Player
     int playersNum; 
     int tableSize;
@@ -26,7 +26,7 @@ class DynamicHashTable //HashTable of type chains
     ~DynamicHashTable();
 
     DynamicHashTable(const DynamicHashTable& other):
-        arr(new LinkedList<shared_ptr<Player>>*[other.tableSize]),
+        arr(new LinkedList<Employee<Player>>*[other.tableSize]),
         playersNum(other.playersNum),tableSize(other.tableSize)
     {
         for (int i = 0; i < other.tableSize; i++)
@@ -37,11 +37,11 @@ class DynamicHashTable //HashTable of type chains
 
     DynamicHashTable& operator=(const DynamicHashTable& other)=delete;
     int activateHashTableFunction(int playerId) const;
-    Node<shared_ptr<Player>>* getPlayerById(int playerId) const;
+    Node<Employee<Player>>* getPlayerById(int playerId) const;
 
     /*operations of hashTable*/
     bool find(int playerId) const;
-    void insert(const shared_ptr<Player>& player);
+    void insert(const Employee<Player>& player);
     void remove(int playerId);
     int getNumPlayersAtHash() const;
     int getTableSize() const;

@@ -30,7 +30,7 @@ StatusType DS::DSaddEmployee(int PlayerID, int GroupID, int score)
     }
     try
     {
-        shared_ptr<Player> new_player(new Player(PlayerID, GroupID, score));
+        Employee<Player> new_player(new Player(PlayerID, GroupID, score));
         AllplayersHashTable.insert(new_player); //may throw bad_alloc
         this->AlllevelZeroScoreArr[score]++;
         Group* gr = this->unionFindGroups.getGroup(GroupID);
@@ -57,7 +57,7 @@ StatusType DS::DSremoveEmployee(int PlayerID)
     }
     try
     {
-        Node<shared_ptr<Player>>* player_data = AllplayersHashTable.getPlayerById(PlayerID);
+        Node<Employee<Player>>* player_data = AllplayersHashTable.getPlayerById(PlayerID);
         int player_level = player_data->data->getPlayerLevel();
         int player_score = player_data->data->getPlayerScore();
         int group_id = player_data->data->getPlayerGroupId();
@@ -94,7 +94,7 @@ StatusType DS::DSemployeeSalaryIncrease(int PlayerID, int LevelIncrease)
         return FAILURE;
     }
     //the player exist
-    Node<shared_ptr<Player>>* player=
+    Node<Employee<Player>>* player=
                                 AllplayersHashTable.getPlayerById(PlayerID);
     int playerOldLevel=player->data->getPlayerLevel();
     int playerScore=player->data->getPlayerScore();
@@ -169,7 +169,7 @@ StatusType DS::DSpromoteEmployee(int PlayerID, int NewScore)
     {
         return FAILURE;
     }
-    Node<shared_ptr<Player>>* playerData=
+    Node<Employee<Player>>* playerData=
             AllplayersHashTable.getPlayerById(PlayerID);
     int playerOldScore=playerData->data->getPlayerScore();
     int playerLevel=playerData->data->getPlayerLevel();

@@ -28,7 +28,7 @@ public:
     int getTotalNumPeopleAtCompany();
     int getTotalNumPeopleAtTree();
     void removePlayerFromHash(int player_id);
-    void addEmployeeToHash(const shared_ptr<Employee>& new_player);
+    void addEmployeeToHash(const Employee<Employee>& new_player);
     int getNumPeopleAtLevelZeroWithScore(int score);
     double getPrecentOfPlayersWithScoreBetweenBounds(int score,int lowerLevel,int higherLevel,
                           int* error, int numPeopleAtZero, int numPeopleAtZeroWithScore);

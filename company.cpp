@@ -76,7 +76,7 @@ void Company::removePlayerFromHash(int player_id)
 {
     this->CompanyPlayerHash.remove(player_id);
 }
-void Company::addPlayerToHash(const shared_ptr<Player>& new_player)
+void Company::addPlayerToHash(const Employee<Player>& new_player)
 {
     this->GroupPlayerHash.insert(new_player);
 }
