@@ -16,7 +16,7 @@ class DynamicHashTable //HashTable of type chains
     void makeDifferentSizeTable(int old_table_size, int new_table_size);
 
     public:
-    LinkedList<shared_ptr<Player>>** arr; //every cell in the array is a linked list
+    LinkedList<shared_ptr<Employee>>** arr; //every cell in the array is a linked list
                                         //of type shared_ptr of type Player
     int playersNum; 
     int tableSize;
@@ -26,7 +26,7 @@ class DynamicHashTable //HashTable of type chains
     ~DynamicHashTable();
 
     DynamicHashTable(const DynamicHashTable& other):
-        arr(new LinkedList<shared_ptr<Player>>*[other.tableSize]),
+        arr(new LinkedList<shared_ptr<Employee>>*[other.tableSize]),
         playersNum(other.playersNum),tableSize(other.tableSize)
     {
         for (int i = 0; i < other.tableSize; i++)
@@ -37,15 +37,15 @@ class DynamicHashTable //HashTable of type chains
 
     DynamicHashTable& operator=(const DynamicHashTable& other)=delete;
     int activateHashTableFunction(int playerId) const;
-    Node<shared_ptr<Player>>* getPlayerById(int playerId) const;
+    Node<shared_ptr<Employee>>* getEmployeeById(int playerId) const;
 
     /*operations of hashTable*/
     bool find(int playerId) const;
-    void insert(const shared_ptr<Player>& player);
+    void insert(const shared_ptr<Employee>& player);
     void remove(int playerId);
-    int getNumPlayersAtHash() const;
+    int getNumEmployeesAtHash() const;
     int getTableSize() const;
-    void setPlayersGroupId(int groupId);
+    void setEmployeesCompanyId(int groupId);
 
 //    //for merging 2 hash of players
 //    //notice : the players's GroupId didnt changed- on the user to call a func to fix this

@@ -72,22 +72,22 @@ double Company::getPrecentOfPlayersWithScoreBetweenBounds(int score,int lowerLev
                          higherLevel,error,numPeopleAtZero,numPeopleAtZeroWithScore);
 }
 
-void Company::removePlayerFromHash(int player_id)
+void Company::removeEmployeerFromHash(int employee_id)
 {
-    this->CompanyPlayerHash.remove(player_id);
+    this->company_employies_hash_table.remove(employee_id);
 }
-void Company::addPlayerToHash(const shared_ptr<Player>& new_player)
+void Company::addEmployeeToHash(const shared_ptr<Employee>& new_player)
 {
-    this->GroupPlayerHash.insert(new_player);
+    this->company_employies_hash_table.insert(new_player);
 }
 int Company::getCompanySumOfHighestMPlayerLevel(int sum,int m)
 {
-    return this->groupLevelTree.getSumOfHighestMPlayerLevel(sum,m,groupLevelTree.getRoot());
+    return this->company_salary_tree.getSumOfHighestMPlayerLevel(sum,m, company_salary_tree.getRoot());
 }
 
 void Company::printCompanyTree()
 {
-  this->CompanyLevelTree.printTree();
+  this->company_salary_tree.printTree();
 }
 
 
