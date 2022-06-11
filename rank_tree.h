@@ -70,9 +70,9 @@ class AvlRankTree
     AvlRankTree(const AvlRankTree& firstTree, const AvlRankTree& secondTree); //merge
     AvlRankTree& operator=(const AvlRankTree &other);
     // void convertSortedArrayToTree(Node* dataArr[],int arrSize);
-    void insert(int salary);
+    void insert(int salary, int id);
     Node* find(int id);
-    void remove(int id);
+    void remove(int salary, int id);
     Node* select(int salary) const;
     int getHeight() const;
     int getMaxlevel() const;

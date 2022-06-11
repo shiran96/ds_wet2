@@ -8,6 +8,8 @@
 using std::shared_ptr;
                             
 const int INITIAL_SIZE=10;
+
+template<typename Employee>
 class DynamicHashTable //HashTable of type chains
 {
     private:
@@ -37,15 +39,15 @@ class DynamicHashTable //HashTable of type chains
 
     DynamicHashTable& operator=(const DynamicHashTable& other)=delete;
     int activateHashTableFunction(int playerId) const;
-    Node<shared_ptr<Employee>>* getEmployeeById(int playerId) const;
+    Node<shared_ptr<Employee>>* getPlayerById(int playerId) const;
 
     /*operations of hashTable*/
     bool find(int playerId) const;
-    void insert(const shared_ptr<Employee>& player);
+    void insert(const shared_ptr<Employee>& employee);
     void remove(int playerId);
-    int getNumEmployeesAtHash() const;
+    int getNumPlayersAtHash() const;
     int getTableSize() const;
-    void setEmployeesCompanyId(int groupId);
+    void setPlayersGroupId(int groupId);
 
 //    //for merging 2 hash of players
 //    //notice : the players's GroupId didnt changed- on the user to call a func to fix this

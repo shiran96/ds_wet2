@@ -1,28 +1,32 @@
  #include "company.h"
-
-Company::Company(int company_id): company_id(company_id), current_value(company_id),
+using std::shared_ptr;
+ 
+template <typename Employee>
+Company<Employee>::Company(int company_id): company_id(company_id), current_value(company_id),
     company_salary_tree(AvlRankTree()), company_employies_hash_table(DynamicHashTable()) {};
 
-int Company::getCompanyId() const
+template <typename Employee>
+int Company<Employee>::getCompanyId() const
 {
 	return this->company_id;
 }
 
-void Company::mergeCompanys(Company* Company) //merge group-->this (group is smaller)
+template <typename Employee>
+void Company<Employee>::mergeCompanys(Company<Employee>* Company) //merge group-->this (group is smaller)
 {
     if (this->getTotalNumPeopleAtCompany() == 0 && Company->getTotalNumPeopleAtCompany() == 0)
     {
         return;
     }
-    if(this->company_employies_hash_table.getNumPlayersAtHash() == 0
-      && Company->company_employies_hash_table.getNumPlayersAtHash() == 0) //nothing to merge
+    if(this->company_employies_hash_table.getNumEmployeesAtHash() == 0
+      && Company->company_employies_hash_table.getNumEmployeesAtHash() == 0) //nothing to merge
     {
         return;
     }
   
     //merge hash
     this->company_employies_hash_table.mergeHash(Company->company_employies_hash_table);
-    this->company_employies_hash_table.setPlayersGroupId(this->company_id);
+    this->company_employies_hash_table.setEmployeesCompanyId(this->company_id);
    // merge rankTrees
     AvlRankTree merged_tree(Company->company_salary_tree,this->company_salary_tree);
     this->company_salary_tree.empty();
@@ -30,64 +34,80 @@ void Company::mergeCompanys(Company* Company) //merge group-->this (group is sma
     merged_tree.empty();
 }
 
-void Company::decreseScoreAtLevelZeroScoreArr(int score)
+template<typename Employee>
+void Company<Employee>::decreseScoreAtLevelZeroScoreArr(int score)
 {
     this->levelZeroScoreArr[score]--;
 }
-void Company::increaseScoreAtLevelZeroScoreArr(int score)
+
+template<typename Employee>
+void Company<Employee>::increaseScoreAtLevelZeroScoreArr(int score)
 {
     this->levelZeroScoreArr[score]++;
 }
 
 //may throw bad alloc
-void Company::removeScoreFromLevelAtRankTree(int level,int score)
+template<typename Employee>
+void Company<Employee>::removeScoreFromLevelAtRankTree(int salary, int id)
 {
-    this->groupLevelTree.remove(level,score);
+    this->company_salary_tree.remove(salary, id);
 }
 
 //may throw bad alloc
-void Company::insertScoreFromLevelAtRankTree(int level,int score)
+template<typename Employee>
+void Company<Employee>::insertScoreFromLevelAtRankTree(int level,int score)
 {
-    this->groupLevelTree.insert(level,score);
+    this->company_salary_tree.insert(level,score);
 }
 
-int Company::getTotalNumPeopleAtGroup()
+template<typename Employee>
+int Company<Employee>::getTotalNumPeopleAtCompany()
 {
-    return this->GroupPlayerHash.getNumPlayersAtHash();
+    return this->company_employies_hash_table.getNumEmployeesAtHash();
 }
-int Company::getNumPeopleAtLevelZeroWithScore(int score)
+
+template<typename Employee>
+int Company<Employee>::getNumPeopleAtLevelZeroWithScore(int score)
 {
     return this->levelZeroScoreArr[score];
 }
 
-int Company::getTotalNumPeopleAtTree()
+template<typename Employee>
+int Company<Employee>::getTotalNumPeopleAtTree()
 {
-    return this->groupLevelTree.getTotalNumPeopleAtTree();
+    return this->company_salary_tree.getTotalNumPeopleAtTree();
 }
 
-double Company::getPrecentOfPlayersWithScoreBetweenBounds(int score,int lowerLevel,int higherLevel,
+template<typename Employee>
+double Company<Employee>::getPrecentOfPlayersWithScoreBetweenBounds(int score,int lowerLevel,int higherLevel,
                    int* error, int numPeopleAtZero, int numPeopleAtZeroWithScore)
 {
-    return this->groupLevelTree.getPrecentOfPlayersWithScoreBetweenBounds(score,lowerLevel,
+    return this->company_salary_tree.getPrecentOfPlayersWithScoreBetweenBounds(score,lowerLevel,
                          higherLevel,error,numPeopleAtZero,numPeopleAtZeroWithScore);
 }
 
-void Company::removeEmployeerFromHash(int employee_id)
+template<typename Employee>
+void Company<Employee>::removePlayerFromHash(int player_id)
 {
-    this->company_employies_hash_table.remove(employee_id);
-}
-void Company::addEmployeeToHash(const shared_ptr<Employee>& new_player)
-{
-    this->company_employies_hash_table.insert(new_player);
-}
-int Company::getCompanySumOfHighestMPlayerLevel(int sum,int m)
-{
-    return this->company_salary_tree.getSumOfHighestMPlayerLevel(sum,m, company_salary_tree.getRoot());
+    this->company_employies_hash_table.remove(player_id);
 }
 
-void Company::printCompanyTree()
+template<typename Employee>
+void Company<Employee>::addEmployeeToHash(const shared_ptr<Employee>& new_player)
 {
-  this->company_salary_tree.printTree();
+    this->GroupPlayerHash.insert(new_player);
+}
+
+template<typename Employee>
+int Company<Employee>::getCompanySumOfHighestMPlayerLevel(int sum,int m)
+{
+    return this->groupLevelTree.getSumOfHighestMPlayerLevel(sum,m,groupLevelTree.getRoot());
+}
+
+template<typename Employee>
+void Company<Employee>::printCompanyTree()
+{
+  this->CompanyLevelTree.printTree();
 }
 
 
