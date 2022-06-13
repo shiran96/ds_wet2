@@ -1,16 +1,18 @@
-#ifndef UNIONFIND_H
-#define UNIONFIND_H
+#ifndef UNIONFIND_H_
+#define UNIONFIND_H_
 
-
+//#include <stdio.h>
+//#include <stdlib.h>
 #include "company.h"
 
 class unionFind {
+    int scale;
     int groupsNum;
     int* parentArr;
     int* groupSizeArr;
     Company** grArray;
 public:
-    unionFind(int groupsNum); //will make k groups
+    unionFind(int groupsNum,int scale); //will make k groups
     ~unionFind();
    
     //void Makeset(int x);//return singletone x
@@ -20,10 +22,10 @@ public:
     int Find(int x); //return the group that x belong to
 
     //call this function after using find to get the real id of the group
-    Company* getCompany(int companyId);
+    Company* getGroup(int groupId);
     
 };
 typedef unionFind* UnionFind;
 
 
-#endif //UNIONFIND_H
+#endif //UNIONFIND_H_

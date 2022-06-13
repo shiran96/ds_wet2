@@ -1,13 +1,13 @@
 #include "unionFind.h"
 
-unionFind::unionFind(int groupsNum):groupsNum(groupsNum),
+unionFind::unionFind(int groupsNum,int scale):scale(scale),groupsNum(groupsNum),
     parentArr(new int[groupsNum +1]()),groupSizeArr(new int[groupsNum + 1]()),
     grArray(new Company*[groupsNum +1])
 {
     for (int i = 1; i < groupsNum+1; ++i) {
-        parentArr[i] = -1; //represent empty cell
+        parentArr[i] = -1;
         groupSizeArr[i] = 1;
-        grArray[i] = new Company(i);
+        grArray[i] = new Company(i,scale);
     }
 }
 
@@ -52,13 +52,13 @@ void unionFind::Union(int p_curr, int q_curr) {
         groupSizeArr[p] += groupSizeArr[q];
         groupSizeArr[q] = 0;
         parentArr[q] = p;
-        grArray[p]->mergeCompanys(grArray[q]);
+        grArray[p]->MergeGroups(grArray[q]);
     }
     else if (groupSizeArr[p] <= groupSizeArr[q]) {
         groupSizeArr[q] += groupSizeArr[p];
         groupSizeArr[p] = 0;
         parentArr[p] = q;
-        grArray[q]->mergeCompanys(grArray[p]);
+        grArray[q]->MergeGroups(grArray[p]);
     }
     //else {
     //    if (p > q) {
@@ -82,8 +82,8 @@ void unionFind::Union(int p_curr, int q_curr) {
  /*   }*/
 }
 
-Company* unionFind::getCompany(int CompanyId)
+Company* unionFind::getGroup(int groupId)
 {
-    int realGroup=this->Find(CompanyId);
+    int realGroup=this->Find(groupId);
     return grArray[realGroup];
 }

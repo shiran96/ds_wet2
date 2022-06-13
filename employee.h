@@ -1,39 +1,36 @@
-#ifndef EMPLOYEE_H
-#define EMPLOYEE_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 class Employee
 {
     private:
-    int employeeId;
-    int employeeGrade;
-    int employeeSalary;
-    int employeeCompanyId;
+    int playerId;
+    int playerScore;
+    int playerLevel;
+    int playerGroupId;
 
     public:
-    Employee(int employeeId, int employeeCompanyId, int grade);
+    Employee(int player_id, int player_group_id ,int player_score);
     ~Employee() = default;
-    Employee(const Employee& employee) = default;
+    Employee(const Employee& player) = default;
     Employee& operator=(const Employee& other) = default;
     
-    //get the current information of the Employee
-    int getEmployeeId() const;
-    int getEmployeeCompanyId() const;
-    int getEmployeeSalary() const;
-    int getEmployeeGrade() const;
+    //get the current information of the player
+    int getPlayerId() const;
+    int getPlayerGroupId() const;
+    int getPlayerLevel() const;
+    int getPlayerScore() const;
     
-    //update the information of the EMPLOYEE
-    
-    // TODO: chack when function is relvent
-    void setEmployeeCompanyId(int groupId);
-    
-    void setEmployeeSalary(int salary);
-    void setEmployeeGrade(int garde);
+    //update the information of the player
+    void setPlayerGroupId(int groupId);
+    void setPlayerLevel(int level);
+    void setPlayerScore(int score);
 
     // //operation for sorting players by level for AVL tree
     // //maybe class instead with operator()
-    // friend bool operator<(const Player& p1, const Player& p2);
-    // friend bool operator>(const Player& p1, const Player& p2);
+    // friend bool operator<(const Employee& p1, const Employee& p2);
+    // friend bool operator>(const Employee& p1, const Employee& p2);
 
 };
 
-#endif /*EMPLOYEE_H*/
+#endif /*PLAYER_H*/

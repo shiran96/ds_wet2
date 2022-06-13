@@ -1,44 +1,38 @@
-#ifndef COMPANY_H
-#define COMPANY_H
+#ifndef GROUP_H
+#define GROUP_H
 
 #include "dynamic_hash_table.h"
-#include "employee.h"
 #include "rank_tree.h"
 
-#include "memory"
-using std::shared_ptr;
-
-template <typename Employee>
-class Company{
+class Company
+{
 private:
-
-    int company_id;
-    int current_value;  
-    int num_of_zero_emploies;
-    int sum_of_zero_bump_grade;
-    AvlRankTree company_salary_tree;
-    DynamicHashTable company_employies_hash_table;
+    int scale; //need to save for copy constructor
+    int groupId;
+    AvlRankTree groupLevelTree;
+    int* levelZeroScoreArr;
+    DynamicHashTable GroupPlayerHash;
 
 public:
-    explicit Company(int company_id);
-    ~Company() = default ;
-    Company(const Company& Company) = default;
-    void mergeCompanys(Company<Employee>* Company);
-    Company& operator=(const Company& Company)=delete;
-    int getCompanyId() const;
+    Company(int groupId,int scale);
+    ~Company();
+    Company(const Company& group);
+    void MergeGroups(Company* group);
+    Company& operator=(const Company& group)=delete;
+    int getGroupId() const;
     void decreseScoreAtLevelZeroScoreArr(int score);
     void increaseScoreAtLevelZeroScoreArr(int score);
     void removeScoreFromLevelAtRankTree(int level,int score);
     void insertScoreFromLevelAtRankTree(int level,int score);
-    int getTotalNumPeopleAtCompany();
+    int getTotalNumPeopleAtGroup();
     int getTotalNumPeopleAtTree();
     void removePlayerFromHash(int player_id);
-    void addEmployeeToHash(const shared_ptr<Employee>& new_employee);
+    void addPlayerToHash(const shared_ptr<Employee>& new_player);
     int getNumPeopleAtLevelZeroWithScore(int score);
     double getPrecentOfPlayersWithScoreBetweenBounds(int score,int lowerLevel,int higherLevel,
                           int* error, int numPeopleAtZero, int numPeopleAtZeroWithScore);
-    int getCompanySumOfHighestMPlayerLevel(int sum,int m);
-    void printCompanyTree() ; //for debug
+    int getGroupSumOfHighestMPlayerLevel(int sum,int m);
+    void printGroupTree() ; //for debug
 };
 
-#endif /*Company_H*/
+#endif /*GROUP_H*/

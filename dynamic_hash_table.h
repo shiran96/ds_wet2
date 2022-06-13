@@ -6,10 +6,8 @@
 #include "employee.h"
 #include <memory>
 using std::shared_ptr;
-                            
-const int INITIAL_SIZE=10;
 
-template<typename Employee>
+const int INITIAL_SIZE=10;
 class DynamicHashTable //HashTable of type chains
 {
     private:
@@ -19,7 +17,7 @@ class DynamicHashTable //HashTable of type chains
 
     public:
     LinkedList<shared_ptr<Employee>>** arr; //every cell in the array is a linked list
-                                        //of type shared_ptr of type Player
+                                        //of type shared_ptr of type Employee
     int playersNum; 
     int tableSize;
 
@@ -43,7 +41,7 @@ class DynamicHashTable //HashTable of type chains
 
     /*operations of hashTable*/
     bool find(int playerId) const;
-    void insert(const shared_ptr<Employee>& employee);
+    void insert(const shared_ptr<Employee>& player);
     void remove(int playerId);
     int getNumPlayersAtHash() const;
     int getTableSize() const;

@@ -33,7 +33,7 @@ int DynamicHashTable::activateHashTableFunction(int playerId) const
 }
 
 
-Node<shared_ptr<Employee>>* DynamicHashTable::getEmployeeById(int playerId) const
+Node<shared_ptr<Employee>>* DynamicHashTable::getPlayerById(int playerId) const
 {
     int place_at_arr=activateHashTableFunction(playerId);
     LinkedList<shared_ptr<Employee>>* curr=(arr[place_at_arr]);
@@ -42,7 +42,7 @@ Node<shared_ptr<Employee>>* DynamicHashTable::getEmployeeById(int playerId) cons
         Node<shared_ptr<Employee>>* iter=curr->head;
         while (iter != nullptr)
         {
-            if(iter->data->getEmployeeId()==playerId)
+            if(iter->data->getPlayerId()==playerId)
             {
                 return iter;
             }
@@ -54,13 +54,13 @@ Node<shared_ptr<Employee>>* DynamicHashTable::getEmployeeById(int playerId) cons
 
 bool DynamicHashTable::find(int playerId) const
 {
-    Node<shared_ptr<Employee>>* player=this->getEmployeeById(playerId);
+    Node<shared_ptr<Employee>>* player=this->getPlayerById(playerId);
     return ( player != nullptr);
 }
 
 void DynamicHashTable::insert(const shared_ptr<Employee>& player)
 {
-    int player_id=player->getEmployeeId();
+    int player_id=player->getPlayerId();
     if(this->find(player_id)==true)
     {
         throw playerAlreadyExist();
@@ -78,7 +78,7 @@ void DynamicHashTable::insert(const shared_ptr<Employee>& player)
 
 void DynamicHashTable::remove(int playerId)
 {
-    Node<shared_ptr<Employee>>* player=getEmployeeById(playerId);
+    Node<shared_ptr<Employee>>* player=getPlayerById(playerId);
     if(player==nullptr)
     {
         throw playerDoesntExist();
@@ -90,7 +90,7 @@ void DynamicHashTable::remove(int playerId)
         tableSize= (tableSize / EXPANTION_RATE); //smaller by 2
         makeDifferentSizeTable(old_table_size,tableSize);
     }
-    player= getEmployeeById(playerId);
+    player=getPlayerById(playerId);
     int index_of_player_in_arr=activateHashTableFunction(playerId);
     arr[index_of_player_in_arr]->remove(player);
     playersNum= playersNum-1;
@@ -125,7 +125,7 @@ void DynamicHashTable::makeDifferentSizeTable(int old_table_size, int new_table_
         {
 
             shared_ptr<Employee> to_insert_player=list_iter->data;
-            int to_insert_player_id=to_insert_player->getEmployeeId();
+            int to_insert_player_id=to_insert_player->getPlayerId();
             try
             {
                 //every insertion of a player could throw bad_alloc
@@ -151,7 +151,7 @@ void DynamicHashTable::makeDifferentSizeTable(int old_table_size, int new_table_
     arr=new_table;
 }
 
-int DynamicHashTable::getNumEmployeesAtHash() const
+int DynamicHashTable::getNumPlayersAtHash() const
 {
     return this->playersNum;
 }
@@ -161,19 +161,19 @@ int DynamicHashTable::getTableSize() const
 }
 //DynamicHashTable::DynamicHashTable(const DynamicHashTable& first, const DynamicHashTable& second):
 //        playersNum(first.playersNum+second.playersNum),tableSize(first.tableSize+second.tableSize),
-//        arr(new LinkedList<shared_ptr<Player>>*[first.playersNum+second.playersNum])
+//        arr(new LinkedList<shared_ptr<Employee>>*[first.playersNum+second.playersNum])
 //{
 //    if(first.playersNum != 0)
 //    {
 //        for (int i = 0; i < first.tableSize; i++)
 //        {
-//            LinkedList<shared_ptr<Player>>* curr=(first.arr[i]);
+//            LinkedList<shared_ptr<Employee>>* curr=(first.arr[i]);
 //            if(curr!= nullptr)
 //            {
-//                Node<shared_ptr<Player>>* list_iter= (curr->head);
+//                Node<shared_ptr<Employee>>* list_iter= (curr->head);
 //                while(list_iter!= nullptr)
 //                {
-//                    shared_ptr<Player> to_insert_player=list_iter->data;
+//                    shared_ptr<Employee> to_insert_player=list_iter->data;
 //                    int to_insert_player_id=to_insert_player->getPlayerId();
 //                    int index=this->activateHashTableFunction(to_insert_player_id);
 //                    this->arr[index]->insert(to_insert_player);
@@ -186,13 +186,13 @@ int DynamicHashTable::getTableSize() const
 //    {
 //        for(int j=0;j<second.tableSize;j++)
 //        {
-//            LinkedList<shared_ptr<Player>>* curr=(second.arr[j]);
+//            LinkedList<shared_ptr<Employee>>* curr=(second.arr[j]);
 //            if(curr!= nullptr)
 //            {
-//                Node<shared_ptr<Player>>* list_iter= (curr->head);
+//                Node<shared_ptr<Employee>>* list_iter= (curr->head);
 //                while(list_iter!= nullptr)
 //                {
-//                    shared_ptr<Player> to_insert_player=list_iter->data;
+//                    shared_ptr<Employee> to_insert_player=list_iter->data;
 //                    int to_insert_player_id=to_insert_player->getPlayerId();
 //                    int index=this->activateHashTableFunction(to_insert_player_id);
 //                    this->arr[index]->insert(to_insert_player);
@@ -204,7 +204,7 @@ int DynamicHashTable::getTableSize() const
 //
 //}
 
-void DynamicHashTable::setEmployeesCompanyId(int groupId)
+void DynamicHashTable::setPlayersGroupId(int groupId)
 {
     for(int i=0;i<this->tableSize;i++)
     {
@@ -217,7 +217,7 @@ void DynamicHashTable::setEmployeesCompanyId(int groupId)
                 shared_ptr<Employee> player=list_iter->data;
                 if(player!= nullptr)
                 {
-                    player->setEmployeeCompanyId(groupId);
+                    player->setPlayerGroupId(groupId);
                 }
                 list_iter=list_iter->next;
             }
@@ -229,15 +229,15 @@ void DynamicHashTable::setEmployeesCompanyId(int groupId)
 //{
 //    for(int i=0;i<this->tableSize;i++)
 //    {
-//        LinkedList<shared_ptr<Player>>* curr=(arr[i]);
+//        LinkedList<shared_ptr<Employee>>* curr=(arr[i]);
 //        if(curr!= nullptr)
 //        {
-//            Node<shared_ptr<Player>>* list_iter= curr->head;
+//            Node<shared_ptr<Employee>>* list_iter= curr->head;
 //            while(list_iter!= nullptr)
 //            {
-//                Node<shared_ptr<Player>>* temp=list_iter;
+//                Node<shared_ptr<Employee>>* temp=list_iter;
 //                list_iter=list_iter->next;
-//                shared_ptr<Player> player=temp->data;
+//                shared_ptr<Employee> player=temp->data;
 //                int player_id=player->getPlayerId();
 //                this->remove(player_id); //remove temp
 //                //   this->playersNum--;
@@ -254,13 +254,13 @@ void DynamicHashTable::setEmployeesCompanyId(int groupId)
 //    this->tableSize=src.tableSize;
 //    for(int i=0;i<src.tableSize;i++)
 //    {
-//        LinkedList<shared_ptr<Player>>* curr=(src.arr[i]);
+//        LinkedList<shared_ptr<Employee>>* curr=(src.arr[i]);
 //        if(curr!= nullptr)
 //        {
-//            Node<shared_ptr<Player>>* list_iter=curr->head;
+//            Node<shared_ptr<Employee>>* list_iter=curr->head;
 //            while(list_iter!= nullptr)
 //            {
-//                shared_ptr<Player> to_insert_player=list_iter->data;
+//                shared_ptr<Employee> to_insert_player=list_iter->data;
 //                int to_insert_player_id=to_insert_player->getPlayerId();
 //                int index=this->activateHashTableFunction(to_insert_player_id);
 //                this->arr[index]->insert(to_insert_player);
@@ -283,7 +283,7 @@ void DynamicHashTable::print() const  //for debug
             while(list_iter!= nullptr)
             {
                 shared_ptr<Employee> to_insert_player=list_iter->data;
-                std::cout<<to_insert_player->getEmployeeId()<<std::endl;
+                std::cout<<to_insert_player->getPlayerId()<<std::endl;
                 list_iter=list_iter->next;
             }
         }

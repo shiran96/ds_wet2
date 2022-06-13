@@ -10,20 +10,19 @@ class AvlRankTree
     private:
     struct Node{
         friend class AvlRankTree;
+        int level;
         struct Node*  father;
         struct Node*  left;
         struct Node*  right;
         int height;
-
-        int id;
-        int salary;
-        int grade;
-
-        int numEmploiesAtSubTree;
-        int sumOfGradeInSubTree;
-        int sumBumpGradeinSubTree;
+        int numPeopleAtLevel;
+        int numPeopleAtSubTree;
+        int sumOfLevelsInSubTree;
+        int* groupScoreArr; //scoreArr for all the people with level
+        int* subTreeGroupScoreArr; 
+        int size; //amount of Nodes in sub tree
     };
-
+    int scale; //size of arr in the Node
     int size_of_tree; //amount of nodes in sub tree
     Node* root;
     Node* max;
@@ -33,22 +32,27 @@ class AvlRankTree
     int calculateBalanceFactor(Node* node) const;
     Node* getMinNode(Node* node) const;
     Node* getMaxNode(Node* node) const;
-    int getNodeSalary(Node* node) const;
+    int getNodeLevel(Node* node) const;
     int getNodeSize(const Node* node) const;
     int getNodeHeight(const Node* node) const;
-    //int getNodeNumPeopleAtLevel(const Node* node) const;
-    int getNodenumEmploiesAtSubTree(const Node* node) const;
-    int getNodesumOfGradeInSubTree(const Node* node) const;
-    int getNodesumBumpGradeinSubTree(const Node* node) const;
-    Node* createNode(int id, int salary, int grade);
+    int getNodeNumPeopleAtLevel(const Node* node) const;
+    int getNodeNumPeopleAtAtSubTree(const Node* node) const;
+    int getNodeSumOfLevelsInSubTree(const Node* node) const;
+    void increaseNumOfPeopleAtLevel(Node* node);
+    void decreaseNumOfPeopleAtLevel(Node* node);
+    void increaseScoreAtGroupScoreArr(Node* node,int score);
+    void decreaseScoreAtGroupScoreArr(Node* node,int score);
+    void increaseScoreAtSubTreeGroupScoreArr(Node* node,int score);
+    void decreaseScoreAtSubTreeGroupScoreArr(Node* node,int score);
+    Node* createNode(int level);
     Node* duplicateNode(Node* node);
     Node* insertNode(Node* new_node,Node* target,Node* parent);
-    Node* findNode(Node* node,int id) const;
+    Node* findNode(Node* node,int level) const;
     Node* deleteNode(Node* target, Node* to_remove);
     Node* selectNodeOperation(Node* node, int index) const;
     void printTreeAux(Node* root) const;
-    void sumUntilReachHighLevel(Node* start,int highLevel, int* with_score,int* in_range,int score) const;
-    void sumUntilReachLowLevel(Node* start,int lowLevel, int* with_score,int* in_range,int score) const;
+    void sumUntilReachHighLevel(Node* start,int highLevel, int* with_score,int* in_range,int score);
+    void sumUntilReachLowLevel(Node* start,int lowLevel, int* with_score,int* in_range,int score);
 
     /*roll function*/
     Node* rollLeftLeft(Node* node);
@@ -64,16 +68,16 @@ class AvlRankTree
     public:
     bool isTreeEmpty() const;
     void empty();
-    AvlRankTree();
+    AvlRankTree(int scale);
     AvlRankTree(const AvlRankTree& other);
     ~AvlRankTree();
     AvlRankTree(const AvlRankTree& firstTree, const AvlRankTree& secondTree); //merge
     AvlRankTree& operator=(const AvlRankTree &other);
-    // void convertSortedArrayToTree(Node* dataArr[],int arrSize);
-    void insert(int salary, int id);
-    Node* find(int id);
-    void remove(int salary, int id);
-    Node* select(int salary) const;
+    void convertSortedArrayToTree(Node* dataArr[],int arrSize);
+    void insert(int level,int score);
+    Node* find(int level);
+    void remove(int level,int score);
+    Node* select(int index) const;
     int getHeight() const;
     int getMaxlevel() const;
     void printTree() const; //for debug

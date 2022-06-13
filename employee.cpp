@@ -1,41 +1,39 @@
 
 #include "employee.h"
 
-Employee::Employee(int employee_id, int employee_company_id,int employee_Grade):
-    employeeId(employee_id), employeeGrade(employee_Grade), employeeSalary(0),
-    employeeCompanyId(employee_company_id)
-    {};
+Employee::Employee(int player_id, int player_group_id ,int player_score):
+    playerId(player_id),playerScore(player_score),playerLevel(0),
+    playerGroupId(player_group_id){}
 
-int Employee::getEmployeeId() const
+int Employee::getPlayerId() const
 {
-    return this->employeeId;
+    return this->playerId;
 }
-int Employee::getEmployeeCompanyId() const
+int Employee::getPlayerGroupId() const
 {
-    return this->employeeCompanyId;
-}
-
-int Employee::getEmployeeSalary() const
-{
-    return this->employeeSalary;
-}
-int Employee::getEmployeeGrade() const
-{
-    return this->employeeGrade;
+    return this->playerGroupId;
 }
 
-//TODO: is relevent?
-void Employee::setEmployeeCompanyId(int companyId)
+int Employee::getPlayerLevel() const
 {
-    this->employeeCompanyId= companyId;
+    return this->playerLevel;
+}
+int Employee::getPlayerScore() const
+{
+    return this->playerScore;
 }
 
-void Employee::setEmployeeSalary(int salary)
+void Employee::setPlayerGroupId(int groupId)
 {
-    this->employeeSalary= salary;
+    this->playerGroupId=groupId;
 }
-void Employee::setEmployeeGrade(int grade)
+
+void Employee::setPlayerLevel(int level)
 {
-    this->employeeGrade = grade;
+    this->playerLevel=level;
+}
+void Employee::setPlayerScore(int score)
+{
+    this->playerScore=score;
 }
 
